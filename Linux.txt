@@ -1,0 +1,45 @@
+
+**************************************************************************************************************
+Eliminar directorios (rmdir) *********************************************************************************
+**************************************************************************************************************
+
+Para eliminar un directorio vacío utilice el comando rmdir como sigue:
+> $ rmdir veggies3 
+
+Si el directorio contiene todavía archivos o subdirectorios, el comando rmdir no lo eliminará.
+
+Use rm -r (agregando la opción recursiva -r al comando rm) para eliminar un directorio y su contenido, incluyendo cualquier subdirectorio y sus archivos, del modo siguiente:
+> $ rm -r veggies3
+
+*************************************************************************************************************
+
+**************************************************************************************************************
+Mover y renombrar directorios ********************************************************************************
+**************************************************************************************************************
+
+Un directorio se renombra moviéndolo a un nombre diferente. Use el comando mv para renombrar archivos:
+
+$ pwd
+/home/user2/veggies
+$ ls
+broccoli
+$ mv broccoli carrots
+$ ls
+carrots
+
+También puede usar mv para mover un directorio a una posición de otro directorio:
+
+$ pwd
+/home/user2/veggies
+$ ls
+carrots
+$ mv carrots ../veggies2
+$ ls ../veggies2
+carrots
+
+En este ejemplo, el directorio carrots se mueve de veggies a veggies2 con el comando mv 
+
+**************************************************************************************************************
+**************************************************************************************************************
+**************************************************************************************************************
+

@@ -1,0 +1,76 @@
+
+Proyecto personal de carácter personal 
+
+donde añadiré apuntes de temas variados que me han sido útiles a la hora
+de generar mis proyectos personales de aprendizaje
+y pueda repasarlos de una forma fácil si los necesito repasar en el futuro.
+
+*******************************************************************************************************************************************
+*******************************************************************************************************************************************
+
+1º Vamos a hacer un repositorio git para el Proyecto Learning-tips:
+> git init
+Inicializado repositorio Git para nuestro proyecto en /home/renegade/Proyectos/Learning-tips/.git/
+
+Y añadimos un fichero oculto '.gitignore' al proyecto para añadir lo que no queramos subir
+
+
+2º Subimos al repositorio nuestro proyecto y hacemos commit de la primera versión:
+> git add .
+> git commit -m "Proyecto Learning-tips. Inicio proyecto"
+
+Ya habíamos configurado la sección de autenticación en un proyecto previo:
+Nos falta configurar git para ejecutar el commit:
+*** Por favor cuéntame quien eres.
+Corre
+  git config --global user.email "you@example.com"
+  git config --global user.name "Tu Nombre"
+para configurar la identidad por defecto de tu cuenta.
+Omite --global para configurar tu identidad solo en este repositorio.
+
+> git config --global user.email "correo...@gmail.com"
+> git config --global user.name  "Nick..."
+
+renegade@MiPC:~/Proyectos/Learning-tips$ git commit -m "Proyecto Learning-tips. Inicio proyecto"
+[master (commit-raíz) de0bc56] Proyecto Learning-tips. Inicio proyecto
+ 8 files changed, 3254 insertions(+)
+ ... ... 
+ 
+
+3º Vamos a subir nuestro proyecto a GitHub:
+
+Necesito añadir un directorio remoto (git add remote...)
+
+> git remote add Learning-tips https://github.com/RenegadeAsturias/Learning-tips.git
+
+Para ver los remotos:
+> git remote
+Learning-tips
+
+
+4º Ahora queremos enviar el código de nuestro repositorio a la nube:
+¡Pero ojo que el repositorio debe existir en GitHub antes de hacer el push!
+Desde GitHub me he creado un repositorio: 'Learning-tips'
+
+Y ahora para subir el código a GitHub:
+> git push <<nombre del remoto>> <<rama que queremos subir>>
+> git push origin master <- Sube el código de la rama master
+> git push origin --all  <- Sube todo el código al servidor remoto
+
+Renegade@MiPC:~/Proyectos/Learning-tips$ git push Learning-tips master
+Enumerando objetos: 15, listo.
+... ...
+To https://github.com/RenegadeAsturias/Learning-tips.git
+ * [new branch]      master -> master
+
+INFO GitHub
+===========================================================================================================
+…or create a new repository on the command line
+echo "# Typescript-ejemplos" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/RenegadeAsturias/Typescript-ejemplos.git
+git push -u origin main
+===========================================================================================================
