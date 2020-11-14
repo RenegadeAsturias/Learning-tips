@@ -74,3 +74,32 @@ git branch -M main
 git remote add origin https://github.com/RenegadeAsturias/Typescript-ejemplos.git
 git push -u origin main
 ===========================================================================================================
+
+
+*******************************************************************************************************************************************
+*******************************************************************************************************************************************
+ME HA DADO ESTE ERROR!, porque no había creado aún el repositorio en GitHub :
+
+renegade@MiPC:~/Proyectos/Learning-tips$ git push Learning-tips master
+Missing or invalid credentials.
+Error: connect ECONNREFUSED /run/user/1000/vscode-git-06cabb6ddf.sock
+    at PipeConnectWrap.afterConnect [as oncomplete] (net.js:1134:16) {
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '/run/user/1000/vscode-git-06cabb6ddf.sock'
+}
+Missing or invalid credentials.
+Error: connect ECONNREFUSED /run/user/1000/vscode-git-06cabb6ddf.sock
+    at PipeConnectWrap.afterConnect [as oncomplete] (net.js:1134:16) {
+  errno: 'ECONNREFUSED',
+  code: 'ECONNREFUSED',
+  syscall: 'connect',
+  address: '/run/user/1000/vscode-git-06cabb6ddf.sock'
+}
+remote: Repository not found.
+fatal: Autenticación falló para 'https://github.com/RenegadeAsturias/Learning-tips.git/'
+renegade@MiPC:~/Proyectos/Learning-tips$ 
+*******************************************************************************************************************************************
+*******************************************************************************************************************************************
+
