@@ -1,0 +1,9 @@
+
+**************************************************************************************************************
+Actualización de la versión de npm****************************************************************************
+**************************************************************************************************************
+-> Este es el aviso por consola de npm para advertir de que hay una nuevo versión de nmp disponible
+
+New patch version of npm available! 6.14.4 → 6.14.8       │
+Changelog: https://github.com/npm/cli/releases/tag/v6.14.8   │
+Run npm install -g npm to update! 
