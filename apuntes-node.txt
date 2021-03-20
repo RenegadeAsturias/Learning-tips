@@ -1,0 +1,60 @@
+20/03/2021 / Apuntes de Node:
+
+Fuente: Vídeo de Jesús Conde: 
+JavaScript "The Next Generation". Administradores de Paquetes. npm vs yarn
+https://www.youtube.com/watch?v=siNCXIRKR28&list=PLEtcGQaT56cgEO8xbV_A7Ux3kpZxRQksb&index=5
+
+Cuando instalamos un módulo con npm, éste, así como sus dependencias
+y las dependencias de sus dependencias son colocadas
+en un directorio predeterminado llamado: node_modules
+es una buena medida, porque en ese directorio se almacena
+todo ese código que no ha sido escrito por nosotros 
+y que en su momento será actualizado por npm sin llevar nosotros un control directo
+
+¿Cómo podemos controlar que paquetes y qué versiones han sido instaladas?
+=> Esa es la función del archivo: ¡¡ package.json !!, que de momento no tenemos
+y que además, entre otras cosas nos permite especificar qué paquetes queremos para nuestro proyecto
+y se utiliza también para especificar parámetros de otras herramientas que utilice nuestra aplicación
+lo podríamos crear de forma manual, pero es mejor crearlo con > npm init
+y contestar una serie de preguntas que nos hará el asistente.
+
+es en el fichero: package.json, donde se describirán las dependencias de nuestros proyecto
+así como los procedimientos de compilación o de despliegue
+
+pero, ¿dónde están los paquetes?
+hay dos formas de instalar los paquetes con npm, local o globalmente !!
+
++ Si lo que tienes pensado es utilizarlo desde la línea de comandos instálalo globalmente
+> npm install prettier -g
+
++ Pero si solo necesitas el paquete para un proyecto puedes instalarlo localmente
+lo que puede a su vez puede hacerse de varios modos
+
+++ Si lo que necesitas es que el paquete este incluido en tu proyecto 
+puedes instalarlo como un paquete de producción como:
+> npm install lodash --save
+
+++ Si lo necesitas para construir tu proyecto pero no como parte del proyecto final
+debes instalarlo como un paquete de desarrollo
+> npm install eslint --save-dev
+
+Después de ejecutar estas líneas se han añadido a nuestro fichero: package.json las siguientes líneas:
+
+"dependencies": {
+	"lodash": "^4.17.11"
+},
+"devDependencies": {
+	"eslint": "^5.14.0"
+}
+
+Y además se nos ha creado en nuestro proyecto el directorio: node_modules
+donde se nos ha guardos todos los módulos que se necesitan
+
+Notas sobre yarn:
+Para instalar el otro gestor de paquetes: yarn, se instala:
+> npm install -g yarn
+
+Y los dos gestores de paquetes, npm y yarn descargan los paquetes requeridos
+en : node_modules y escriben las dependencias de módulos en: package.json
+así que podemos intercambiar en el uso entre los gestores de paquetes: npm y yarn sin problemas
+
