@@ -109,6 +109,14 @@ renegade@MiPC:~/Proyectos/Learning-tips$ git add .
 renegade@MiPC:~/Proyectos/Learning-tips$ git commit -m "Apuntes de Node"
 renegade@MiPC:~/Proyectos/Learning-tips$ git push Learning-tips master
 
+*******************************************************************************************************************************************
+
+22/03/2021 Actualizo el Proyecto con unas Notas Generales
+
+renegade@MiPC:~/Proyectos/Learning-tips$ git add .
+renegade@MiPC:~/Proyectos/Learning-tips$ git commit -m "Notas, correspondientes al Curso de Prework para crear el entorno de trabajo para desarrollos."
+renegade@MiPC:~/Proyectos/Learning-tips$ git push Learning-tips master
+
 
 
 
