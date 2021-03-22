@@ -1,0 +1,29 @@
+22/03/2021 / Notas Generales
+
+******* Notas: Generales ************
+
+********************************************************************************************************************
+
+Los Sistemas Operativos de Linux tienen un : Gestor de paquetes o manejador de dependencias -> equivalente a la Tienda de Microsoft Store
+
+Ubuntu tiene un Repositorio de Dependencias donde se actualizan las dependencias/actualizaciones
+
+
+Con: sudo apt-get update (+ contraseña)
+comprobamos si en el Repositorio de Dependencias hay nuevas dependencias/actualizaciones y nos las descargamos
+
+Y para aplicar los cambios de las nuevas actulizaciones descargadas escribimos: 
+sudo apt-get upgrade
+
+Para instalar algo nuevo, escribimos:
+sudo apt install nodejs <<<-------------------------- Node!!!
+ 
+Node es un Runtime Environmet, un ambiente de ejecución , para escribir y ejecutar javascrit
+node -v <<<--- Versión de Node instalada
+
+Y ahora instalmos:
+sudo apt install npm <<<--- Manejador de Paquetes de Node
+
+********************************************************************************************************************
+
++ Para hacer el símbolo de la virgulilla (~) pueden usar: ALT+126

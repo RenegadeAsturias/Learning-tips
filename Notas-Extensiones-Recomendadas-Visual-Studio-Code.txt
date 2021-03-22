@@ -1,0 +1,31 @@
+22/03/2021 / Notas: Extensiones Recomendadas para Visual Studio Code
+
+******* Extensiones y personalización de Visual Studio Code ******* 
+
+Plugins recomendados para instalar en Visial Studio Code:
+
+Vamos a Extensiones (Ctrol + Shift + X) y añadimos:
+
++ Prettier : 
+-- Mejora la forma en que se visualiza el código
+
++ Color Highlight: 
+-- Rodea con un recuadro visual con los colores al rededor de los códigos hexadecimales de los colores de tus css
+
++ Live Server
+-- Cuando desarrollas proyectos web y vas modificando los ficheros de tu proyecto y guardes tendrás que refrescar el navegador para ver los cambios
+-- esta extensión te ayudará a que no tengas que refrescar el navegador para visualizar los cambios realizados.
+ 
++ Path Intellisense
+-- Cuando vinculas referencia a archivos, esta extensión te ayudará a autocompletar los paths o rutas 
+
++ Auto Rename Tag
+-- Esta extensión te ayudará cuando cambies algún tag de html, replicará el cambio el tag correspondiente.
+
++ Material Icon Theme
+-- Te agrega un paquete de iconos que mostrarán a la izquierda del nombre de la pestaña del fichero abiero 
+-- un icono correspondiente a la extensión correspondiente del fichero abierto.
+
+
+
+

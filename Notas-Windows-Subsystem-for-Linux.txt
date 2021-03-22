@@ -1,0 +1,9 @@
+22/03/2021 / Notas: Windows Subsystem for Linux
+
+******* Windows Subsystem for Linux ************
+
+Windows Subsystem for Linux está disponible sólo para: Windows 10 última versión 2004 / Compilación 19041 (o superior)
+puedes trabajar desde una consola de Linux dentro de tu Sistema Operativo Windows
+
+En Windows se está desarrollando la tecnología Windows Subsystem for Linux que está en la versión 2
+que contiene un Kernel de Linux que además combina tecnologías de virtualización que le permiten ejecutarse muy rápido en Windows
