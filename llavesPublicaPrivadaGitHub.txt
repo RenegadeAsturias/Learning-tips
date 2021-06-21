@@ -1,0 +1,48 @@
+
+Generar una nueva llave SSH para utilizar con GitHub: (Cualquier sistema operativo):
+ssh-keygen -t rsa -b 4096 -C "<cuenta_correo>@gmail.com"
+
+
+renegade@MiPC:~$ ssh-keygen -t rsa -b 4096 -C "<cuenta_correo>@gmail.com"
+
+=> Se crea la llave pública y privada.
+=> A la llave privada se le puede añadir una contraseña extra
+=> Las llaves ssh no son por repositario o proyecto sino que son por persona
+
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/renegade/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/renegade/.ssh/id_rsa
+Your public key has been saved in /home/renegade/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:iYuCvNGoGcaT1McZ/... <cuenta_correo>@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+|  oo.=o.. .      |
+|  oo==*. . +     |
+|  ooo=o+= o...   |
+|  .+..=*.+.      |
+| ... +o.S ...    |
+|+.+ .... + E     |
+|oO... o.         |
+|oo+..            |
+|o......+++.......|
++----[SHA256]-----+
+
+
+Comprobamos que el Servidor de llaves ssh está arrancado
+y corriendo para hacer la conexión doble
+cuando nos conectamos a un servidor remoto, en este caso a GitHub
+
+renegade@MiPC:~$ eval $(ssh-agent - s)
+renegade@MiPC:~$ Agent pid 4724
+
+Agregamos la llave privada a nuestro servidor de llaves ssh
+ssh-add ~/.ssh/id_rsa
+
+renegade@MiPC:~$ ssh-add ~/.ssh/id_rsa
+Identity added: /home/renegade/.ssh/id_rsa (<cuenta_correo>@gmail.com)
+
+
+
