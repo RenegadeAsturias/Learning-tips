@@ -117,6 +117,13 @@ renegade@MiPC:~/Proyectos/Learning-tips$ git add .
 renegade@MiPC:~/Proyectos/Learning-tips$ git commit -m "Notas, correspondientes al Curso de Prework para crear el entorno de trabajo para desarrollos."
 renegade@MiPC:~/Proyectos/Learning-tips$ git push Learning-tips master
 
+*******************************************************************************************************************************************
+
+07/01/2022 Actualizo el Proyecto con unas Notas sobre Express
+
+renegade@MiPC:~/Proyectos/Learning-tips$ git add .
+renegade@MiPC:~/Proyectos/Learning-tips$ git commit -m "Notas, correspondientes al Curso de Makigas Typescript sobre Express."
+renegade@MiPC:~/Proyectos/Learning-tips$ git push Learning-tips master
 
 
 
