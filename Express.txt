@@ -38,5 +38,34 @@ Ejecute la aplicación con el siguiente mandato:
 $ node app.js
 
 
+// ***************************** La idea de cómo encapsular también esto puede ser:
+
+Crear un fichero: server.ts y añadir:
+
+export default function createServer(){
+    const app = express()
+
+    app.get('/resultados/:parametro1/:parametro2', (req, res) => {
+        res.send(`Resultados del ${req.params.equipo1} Vs. ${req.params.equipo2}`)
+    })
+
+    return app;
+}
+
+Y ahora en el fichero inicial: index.ts, añadir:
+
+import createServer from './server'
+
+createServer().listen(3000, () => {
+    console.log("Ya estamos escuchando!")
+})
+
+
+Y ahora:
++ compilar: npm run build // tsc 
++ ejecutar: npm run start // node dist/index.js
++ probar:   curl http://localhost:3000:/resultados/BAR/BET
+
+
 
 
