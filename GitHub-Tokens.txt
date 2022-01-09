@@ -1,0 +1,17 @@
+
+Autenticación con 'personal access token' para actualizar proyectos GitHub desde la consola
+en lugar de utilizar usuario/constraseña:
+
+Parece que ahora no está permitido hacer push de los proyectos desde la consola directamente a GitHub
+utilizando usuario y contraseña sino que hay que utilizar SSH
+o bien generar un token para utilizarlo en lugar de la contraseña de GitHub.
+
+Para generar un Token, desde GitHub ir a:
+
+Settings -> Developer Settings -> Personal Access Tokens -> Generate New Token
+y marcar: admin:repo_hook + delete_repo
+las entradas donde dice 'repo'
+
+Puedes leer las instrucciones en el link:
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
