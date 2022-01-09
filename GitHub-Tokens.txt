@@ -9,7 +9,7 @@ o bien generar un token para utilizarlo en lugar de la contraseña de GitHub.
 Para generar un Token, desde GitHub ir a:
 
 Settings -> Developer Settings -> Personal Access Tokens -> Generate New Token
-y marcar: admin:repo_hook + delete_repo
+y marcar: admin:repo + delete_repo
 las entradas donde dice 'repo'
 
 Puedes leer las instrucciones en el link:
