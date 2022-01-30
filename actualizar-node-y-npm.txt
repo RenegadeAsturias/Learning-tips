@@ -1,0 +1,56 @@
+
+
+
+1º Comprobar las versiones actuales 
+***************************************************************************
+
+renegade@MiPC:~$ npm -version
+6.14.15
+
+renegade@MiPC:~$ node --version
+v14.18.3
+
+2º Actualizar: nmp
+***************************************************************************
+
+renegade@MiPC:~$ sudo npm install -g npm@latest
+[sudo] contraseña para renegade: 
+/usr/bin/npm -> /usr/lib/node_modules/npm/bin/npm-cli.js
+/usr/bin/npx -> /usr/lib/node_modules/npm/bin/npx-cli.js
++ npm@8.4.0
+added 70 packages from 17 contributors, removed 290 packages and updated 147 packages in 18.443s
+
+¡Actualizado!!!!!!!!!!!!!!!!!!!!!!!!!!!
+renegade@MiPC:~$ npm -version
+8.4.0
+
+3º Limpiar caché
+***************************************************************************
+En la mayoría de los casos, realizar esta acción no es necesaria, pero en muchos tutoriales lo recomiendan al hacer un actualización de este tipo.
+
+> sudo npm cache clean -f
+
+
+4º Actualizar: node
+***************************************************************************
+
+Actualizando Node.Js
+
+Ya está todo preparado para actualizar node a su última versión estable. 
+Una herramienta muy útil es n, este gestor de paquetes para node nos ofrece muchas opciones, no solo la actualización, 
+por lo que es muy recomendable tenerlo a mano.
+
+~$ sudo npm install -g n
+
+Ahora procedemos a instalar la última versión estable de Node.Js.
+
+~$ sudo n stable
+
+Y con esto tenemos la última versión estable instalada en nuestro entorno.
+
+
+¡Actualizado!!!!!!!!!!!!!!!!!!!!!!!!!!
+renegade@MiPC:~$ node --version
+v16.13.2
+
+
