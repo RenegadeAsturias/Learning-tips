@@ -1,6 +1,7 @@
 
 
 1º Instalar Angular CLI
+*******************************************************************************
 
 Install the CLI using the npm package manager:
      
@@ -8,6 +9,7 @@ Install the CLI using the npm package manager:
 
 
 2º Crear, construir y servir un nuevo proyecto básico de Angular
+*******************************************************************************
 
 
 To create, build, and serve a new, basic Angular project on a development server, 
@@ -19,6 +21,33 @@ ng serve
 
 
 3º La aplicación se abre en el navegador:
+*******************************************************************************
 
 In your browser, open http://localhost:4200/ to see the new application run. 
-When you use the ng serve command to build an application and serve it locally, the server automatically rebuilds the application and reloads the page when you change any of the source files.
+When you use the ng serve command to build an application and serve it locally, 
+the server automatically rebuilds the application and reloads the page when you change any of the source files.
+
+4º Me ha dado este error
+*******************************************************************************
+
+renegade@MiPC:~$ npm install -g @angular/cli
+npm notice 
+npm notice New minor version of npm available! 8.1.2 -> 8.4.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v8.4.0
+npm notice Run npm install -g npm@8.4.0 to update!
+
+
+5º He ejecutado el comando que me indica para actualizar npm
+*******************************************************************************
+> sudo npm install -g @angular/cli
+
+
+6º Vuelvo a instar Angular Cli
+*******************************************************************************
+> sudo npm install -g @angular/cli
+
+
+
+
+
+
