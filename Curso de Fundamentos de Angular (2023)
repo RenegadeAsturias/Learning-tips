@@ -1,0 +1,33 @@
+Apuntes: Curso de Fundamentos de Angular (21/01/2023)
+https://www.udemy.com/course/fundamentos-de-angular/
+
++Instalación de básicos
+
+#Instalar node.js
+$ node -v
+$ npm -v
+
+#Instalar el Cliente de Angular
+$ npm install -g @angular/cli
+
+$git --version
+
+#Instalar yarn
+$ npm install -g yarn
+
+#Pide instalar el proyecto utilizando:
+
+#Clonar el proyecto entero con todas sus ramas dentro de my-project/.git
+$ git clone --bare https://github.com/kaikcreator/angular-school-c1 my-project/.git
+$ git config --unset core.bare
+$ git reset --hard
+
+#Instalar todas las dependencias que necesita el proyecto
+$ npm install
+
+#CLI de Angular (Command Line Interfece de Angular)
+$ ng
+
+#Para ejecutar el servidor de desarrollo
+$ ng serve
+
