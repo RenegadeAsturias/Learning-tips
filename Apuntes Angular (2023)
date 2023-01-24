@@ -1,0 +1,83 @@
+
+#Angular (2023)
+
+https://docs.angular.lat/docs
+
+Para instalar Angular en tu sistema local, necesitas lo siguiente:
+
+#1º Instalar Node.js (https://nodejs.org/en/download/node-v18.13.0-x64.msi)
+
+$ node -v
+v18.13.0
+
+
+#2º npm package manager
+
+Angular, CLI de Angular, y las aplicaciones de Angular dependen de paquetes npm para muchas funcionalidades y funciones.
+Para descargar e instalar paquetes npm, necesitas un administrador de paquetes npm. 
+Esta guía utiliza la interfaz de línea de comandos del cliente npm, que se instala con Node.js por defecto. 
+Para comprobar que tienes instalado el cliente npm, ejecuta npm -v en una terminal.
+
+$ npm -v
+8.19.3
+
+
+#3º Instalar la CLI de Angular
+
+Utilizarás la CLI de Angular para crear proyectos, generar código de aplicaciones y bibliotecas, 
+y realizar una variedad de tareas de desarrollo, como pruebas, agrupación e implementación.
+
+Para instalar CLI de Angular, abre una terminal y ejecuta el siguiente comando:
+      
+$ npm install -g @angular/cli
+
+
+#4º Crea un espacio de trabajo y una aplicación inicial
+
+Desarrollas aplicaciones en el contexto de un espacio de trabajo de Angular.
+Para crear un nuevo espacio de trabajo y una aplicación inicial:
+Ejecuta el comando CLI ng new y proporciona el nombre my-app, como se muestra aquí:
+          
+$ ng new my-app
+
+El comando ng new te solicitará información sobre las funciones que debe incluir en la aplicación inicial. 
+Acepta los valores predeterminados presionando la tecla Enter o Return.
+
+La CLI de Angular instala los paquetes npm de Angular necesarios y otras dependencias. Esto puede tardar unos minutos.
+La CLI crea un nuevo espacio de trabajo y una aplicación de bienvenida simple, lista para ejecutarse.
+
+También tienes la opción de usar el modo estricto de Angular, que puede ayudarte a escribir un mejor código y más fácil de mantener. 
+Para más información, mira Modo estricto.
+
+
+#5º Ejecutar la aplicación
+
+La CLI de Angular incluye un servidor, de modo que puede crear y servir su aplicación localmente.
+Navega a la carpeta del espacio de trabajo, como my-app.
+Ejecuta el siguiente comando:
+
+$ cd my-app
+$ ng serve --open
+
+El comando ng serve inicia el servidor, observa tus archivos, y reconstruye la aplicación a medida que realizas cambios en esos archivos.
+La opción --open (o simplemente-o) abre automáticamente tu navegador en http://localhost:4200/.
+Si tu instalación y configuración fue exitosa, deberías ver una página similar a la siguiente.
+...
+
+
+#6º Pasos siguientes
+
+##Para obtener una introducción más completa a los conceptos fundamentales y la terminología de la arquitectura de aplicaciones de una sola página 
+y los principios de diseño de Angular, lee la sección Conceptos Angular.
+
+##Trabaja en el Tutorial de Tour de los Héroes, un ejercicio práctico completo que te presenta el proceso de desarrollo de aplicaciones mediante la CLI de Angular 
+y te explica los subsistemas importantes.
+
+##Para obtener más información sobre el uso de la CLI de Angular, consulta la Descripción general del CLI.
+Además de crear el espacio de trabajo inicial y andamios de la aplicación, puedes usar la CLI para generar código de Angular como componentes y servicios. 
+La CLI soporta el ciclo de desarrollo completo, incluida la creación, las pruebas, la agrupación y la implementación.
+
+##Para obtener más información sobre los archivos de Angular generados por ng new, 
+consulta Espacio de trabajo y Estructura de archivos del proyecto.
+
+
