@@ -1,0 +1,172 @@
+
+Apuntes-Angular. Curso Angular Esencial (LinkedinLearning) (2023)
+
+¿Qué es Angular? *********************************
+
++ Una plataforma basada en Javascript
++ Puede ejecutarse en móviles, servidores y navegadores
++ Alto rendimiento pensada para ejecutarse en dispositivos móviles (Mobile first)
++ Código abierto, apoyado por Google (Javascript) y Microsoft (Typescript)
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+¿Cómo funciona? **********************************
+
+
++Punto de entrada: Módulo principal
+->Componente(s) : Tiempo de vida en función de tiempo de uso
+-->Componente (encapsulado)
+-->Componente (encapsulado)
+->Servicios: Permiten la comunicación entre componentes y la aplicación
+-- Vivos a lo largo de toda la aplicación / En memoria
+
+Una vez definidos los componentes, tenemos:
+
+#1º Código fuente: Conjunto de archivos en javascript, typescript, html, css
+con los que desarrollamos nuestra aplicación
+Esto una vez que se cargue dentro de un navegador va a cambiar cuando Angular se ejecute
+
+#2º Angular: Cuando Angular entre por primera vez tomará todo el código y lo va a reescribir
+en algunos casos simplemente añadirá algunos atributos extra dentro del HTML
+en otros casos va reescribirlo por completo dependiendo de nuestro código
+y de la funcionalidad que hayamos definido.
+
+#3ºApp: Este producto que va a salir a partir del proceso o render de Angular
+va a ser lo que nosotros vamos a llamar la aplicación
+
+La aplicación va a interactuar con el código que hemos desarrollado en Typescript
+a través de diferentes elementos como:
++Eventos
++Bindings/modelos
+
+Así cuando el usuario modifique la información por ejemplo rellenando un formulario
+o elementos que se encuentran dentro de la aplicación
+podemos también modificar la información que se encuentre ahí
+y a partir de esa modificación enviar a Angular que va a responder con un proceso
+
+que puede ser enviar al usuario a otra pantalla, modificar los datos presentados, 
+o simplemente realizar una compra.
+
+#4º Eventos: También vamos a tener los eventos que van a ser a partir del teclado, 
+movil, interación para responder a las interacciones.
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Partes de una app Angular
+
+#1º Módulos .................................................
+
+Punto de entrada de nuestra aplicación, 
+lo primero que se carga al ejecutar una aplicación Angular
+
++Toda apliación contiene al menos un módulo principal
+
++Agrupa diferentes funcionalidades de la apliación:
+Si utilizamos librerías internas, librerías externas, 
+estamos definiendo los componentes de nuestra apliación,
+las rutas, los servicios, todos los elementos con los que vamos a trabajar
+se van a cargar en este componente principal.
+Y nos va a definir cómo va a trabajar nuestra aplicación y con qué va a comenzar a trabajar.
+
+Un poco de código de emplo de un módulo: app.module.ts
+
++Código 1º Imports
+import {BrowseModule} from '@angular/plataform-browser';
+... ...
+
++Código 2º Tenemos un elemento que es el que define nuestro módulo es el decorador
+@NgModule ({ --------> Decorador
+así es como vamos a declarar que el código que estamos utilizando es un módulo
+
++Código 3º declarations
+declarations: [ -----> Definimos los distintos componentes con los que estamos trabajando
+	AppComponent
+]
+
++Código 4º imports
+imports: [ 	----------> Imports o módulos importados con los que estamos trabajano
+			----------> y van a estar disponibles en nuestra aplicación para trabajar con los componentes
+			----------> podemos incluir módulos de Angular y módulos externos
+	BrowseModule, FormsModule, HttpModule
+], 
+
++Código 5º providers
+providers: [] --------> Servicios con los que vamos a trabajar en nuestra aplicación
+			  --------> y que se van a mantener disponibles durante toda la vida útil de nuestra apliación
+			  --------> almacenando y transporando datos.
++Código 6º bootstrap
+bootstrap: [AppComponent]
+
+
+#2º Componentes .................................................
+El componente es el bloque central de construcción de una aplicación
+todos los elementos que tengamos de interacción o de contenido dentro de una apliación Angular
+se va a contener dentro de un componente.
+
++ Son los bloques o ladrillos de construcción de una apliación
++ Los componentes pueden estar anidados entre sí
+  Podemos tener múltiples componentes dentro de una pantalla
+  y a su vez tener múltiples componentes dentro de un componente.
++ El componente tiene un tiempo de vida útil de hecho tiene un ciclo de vida.
++ El componete se va a cargar cuando nosotros empecemos a utilizarlo
+  y dependiendo de la arquitectura puede invocar a otros componentes.
++ Cuando dejamos de utilizar un componente se elemina de la memoria
++ Cada componente trabaja por separado y podemos tener componentes dentro de otros componentes
+  los componentes siempre va a estar encapsulados
+  y pueden comunicarse entre sí a través de inputs, outputs y servicios
+
+Un poco de código de emplo de un componente: 
+
++Código 1º Imports --> Importamos las funcionalidades que vamos a tener
+
+import {Component, OnInit} from '@angular/core';
+
++Código 2º Tenemos un elemento que es el que define nuestro componente es el decorador
+@Component ({ --------> Decorador
+			  --------> así es como vamos a declarar que el código que estamos utilizando es un componente
+			  --------> incluye el concepto de Typescript de Metadatos
+			  --------> que nos permite configurar cómo va a trabajar este componente
+			  --------> definimos varias propiedades:
+			  --------> selector: cómo vamos a incluirlo dentro del código
+			  --------> templateUrl: plantilla y styleUrls: css
+			  
+	selector: 'app-colores',
+	templateUrl: './colores.component.html',
+	styleUrls: ['./colores.component.csss']
+}
+
++Código 3º constructor
+Este elemento se ejecuta cuando la aplicación Angular inicializa.
+constructor() { }
+
++Código 4º eventos
+Su código se ejecutará cada vez que carguemos el componente y cada vez que entre en memoria
+ngOnInit() { }
+
++Código 5º métodos
+Reciben, envíar y procesar información que viene tanto desde la plantilla como información externa.
+generarRandom():String {
+ ........
+}
+
+
+#3º Plantillas .................................................
+
++La plantilla es la parte visual de un componete y siempre están relacionados.
+generalmente vamos a tener relacionado un componente con una plantilla
+que puede ser tanto interna como externa.
+
++Una plantilla en resumen es HTML al cuál nosotros le podemos inyectar
+diferentes datos y propiedades de Angular.
+
++Las plantillas están controladas desde el componente
+y nos permiten enviar, recibir y reaccionar a partir de la información que nos da el componente.
+
+..... ......
+
+
+#4º Directivas .................................................
+
+
+#5º Servicios ..................................................
+
