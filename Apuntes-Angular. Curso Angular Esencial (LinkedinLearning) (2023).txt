@@ -162,11 +162,111 @@ diferentes datos y propiedades de Angular.
 +Las plantillas están controladas desde el componente
 y nos permiten enviar, recibir y reaccionar a partir de la información que nos da el componente.
 
-..... ......
+Un poco de código de emplo de una plantilla: 
+
+<p [ngStyle]="{'background':colorHex()}">----------------------> Directivas
+	<app-saludo [colorNombre]="colorLocal"></app-saludo>-------> Componentes
+</p>
+<p>
+	Color del componente padre {{colorNombre}} ----------------> Expresiones
+</p>
 
 
-#4º Directivas .................................................
+#5º Servicios .................................................
++Básicamente nos permiten insertar datos
++Los servicios permanecen activos durante toda la apliación
++Los servicios pueden comunicarse con otros elementos de la aplicación
+ pueden comunicarse con componentes, directivas y con otros servicios.
++Sirven para transportar la información que se encuntra entre los diferentes esqumas.
 
+Esquema
+[
+SERVICIOS <---> Componente
+SERVICIOS <---> Componente
+SERVICIOS <---> Directiva
+SERVICIOS <---> Servicio
+]
 
-#5º Servicios ..................................................
+Un poco de código de emplo de un componente: 
+
++Código 1º Imports --> Importamos las funcionalidades que vamos a tener
+
+import {Injectable} from '@angular/core';
+
++Código 2º Tenemos un elemento que es el que define nuestro componente es el decorador
+@Injectable () --------> Decorador
+
++Código 3º constructor
+Este elemento se ejecuta cuando la aplicación Angular inicializa.
+constructor() { }
+
++Código 4º métodos
+mostrarLibors():String {
+ ........
+}
+
+#5º Directivas ..................................................
++Un componente es básicamente una directiva con plantilla
++Y una directiva es un componente sin ella.
++Usualmente las directivas no van a trabajar con plantillas aunque pueden hacerlo.
+
++Tipo de directivas estructurales que agregan/eliminan elementos
+
++Tipo de directivas de atributo que cambian la apariencia o comportamiento de elementos
+
+++Un poco de código de emplo de una directiva estructural ngFor: 
+
+<ul>
+	<li *ngFor="let libro of libros">
+		<a (click)="agregarLibro(libro)"/></a> -----> directiva estructural
+	</li>
+</ul>
+
+esta directiva estructural va a cambiar el HTML que se encuentra dentro de ella.
+
+++Un poco de código de emplo de una directiva de atributo ngStyle: 
+la directiva de atributo ngStyle va a modificar las propiedades de un párrafo
+por las información de los parámetros que tengo definidos, modificando el color de fondo.
+
+<p [ngStyle]="{'background':colorHex()}">  ---------> directiva de atributo
+	<app-saludo [colorNombre]="colorLocal"></app-saludo>
+</p>
+<p>
+	Color del componente padre {{colorNombre}}
+</p>
+
+++Un ejemplo de definición de Directiva podría ser:
+
+import { Directive } from '@angular/core';
+
+@Directive({ ---------------------------------> Decorador
+	selector: '[appMiDirectiva]' -------------> Metadatos
+})
+export class MiDirectivaDirective {
+
+	constructor() {} -------------------------> Constructor
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Archivos y recursos para el curso
+
+Proyecto disponible en:
+https://github.com/LinkedInLearning/Angular-esencial-2841344
+
+1º Instalar: Visual Studio Code
+2º Instalar: Node.js
+3º Instalar: Typescript (npm install -g typescript) 
+4º Probar: tsc -v, para visualizar la versión de Typescript
+5º Instalar la Línea de Comandos de Angular CLI: npm install -g @angular/cli
+ 
+$ ng version  	 ----> Muestra la versión de Angular instalada
+$ ng new prueba2 ----> Crear una aplicación desde cero
+$ ng generate <elemento> <nombre>
+$ ng generate component micomponente -------> Genera un nuevo componente
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Inicialización y elementos de un proyecto Angular
+
+.................
+
 
