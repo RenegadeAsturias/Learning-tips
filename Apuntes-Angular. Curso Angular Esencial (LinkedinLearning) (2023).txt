@@ -267,6 +267,143 @@ $ ng generate component micomponente -------> Genera un nuevo componente
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 Inicialización y elementos de un proyecto Angular
 
-.................
++En esta sección se describen muy por encima algunos de los ficheros
+ comunes en una aplicación Ángular, así como su funcionalidad.
+
++Generalmente las aplicaciones Angular que se distribuyen no contienen
+ la carpeta: node_modules
+ esta carpeta contiene las dependencias de los módulos que estamos utilizando.
+
++El fichero: package.json 
+ contiene entre otros las dependencias de los módulos que estamos utilizando.
+
++Ejemplo:
+"dependencies": {
+ "@angular/cores":"<version>",
+ "@angular/cli":"<version>",
+ ... ...
+ 
++Si el proyecto no contiene la carpeta: node_modules
+ para resetablecer la carpeta así como las dependencias
+ ejecutar: 
+ > $ npm install
+ 
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Sintaxis estricta, inicialización de variables y tipado
+
++Forzar la sintaxis más estricta de Typescript
+
+Estoy en: app.component.ts
+... ... ...
+export class AppComponet {
+	title = 'test1';
+	-- Inicializo una variable ---1ª forma------Inicializar con valor en el constructor.
+	miVar:number;
+	constructor(){
+		this.miVar=0;
+	}
+	-- Inicializo una variable ---2ª forma------Inicializar con valor en la variable.
+	miVar = 0;
+	-- Inicializo una variable ---3ª forma------Variable personalizada.
+	----En src> app> common> types.ts ----> defino la variable
+	export interface Libro {
+		id:number,
+		titulo:string,
+		autor?:string,
+		descripcion?:string
+	}
+	---Y ahora la utilizamos y la inicializamos:
+	miLibro: Libro;
+	constructor(){
+		this.miLibro = {
+			id:1,
+			titulo:'xxx'
+		}
+	}
+	---O también, para que sea un array:
+	misLibros: Libro[];
+	constructor(){
+		this.misLibros = [
+			{
+			id:1,
+			titulo:'xxx'
+			}
+		]
+	}
+	
+}
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Componentes de Angular
+
+#1º Anatomía de un componente
+
++Creación de un componente desde la terminal
+$ ng generate component aleatorio
+
+src>app>aleatorio (encapsulado a nivel de componente)
++aleatorio.component.css ------>Parte visual, estilos
++aleatorio.component.html ----->Parte visual, html
++aleatorio.component.spec.ts -->Pruebas para el componente
++aleatorio.component.ts ------->Código fuente del componente
+
+En: aleatorio.component.ts tenemos:
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-aleatorio',
+  templateUrl: './aleatorio.component.html',
+  styleUrls: ['./aleatorio.component.css']
+})
+export class AleatorioComponent {
+	// Incluimos también
+	aleatorio:number = Math.floor(Math.random()*100);
+	constructor(){}
+	ngOnInit(){}
+}
+
+#Hemos creado el componente pero con esto no se mostrará en la aplicación
+
+En el index.html tenemos:
+<body>
+	------>Incluye el módulo inicial de nuestra aplicación dentro del archivo index.html
+	------>Aquí comienza nuestra aplicación
+	<app-root>Loading...</app-root>
+</body>
+
+#Vamos a buscar ese componente inicial en: app.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Hola Mundo!';
+}
+
+#Y en la plantilla del componente incial: app.component.html, tenemos:
+<h1>{{ title }}</h1> ---> Muestra Hola Mundo!
+
+#Añadimos en la plantilla de nuestro componente inicial 
+ la llamada a nuestro nuevo componente aleatorio
+ @Component({
+  selector: 'app-aleatorio', 
+ 
+Así que añadimos en el HTML la etiqueta:
+<app-aleatorio></app-aleatorio>
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Métodos, propiedades y plantillas
+
+... ... ...
+
+
 
 
