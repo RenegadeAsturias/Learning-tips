@@ -653,6 +653,143 @@ Otro ejemplo:
 +Desplegar listas con ngFor
 --------------------------------------------------
 
+#Incluimos el siguiente código en el componente, por ejemplo: app.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  
+  libros:Array<Object>;
+  
+  constructor() {
+	this.libros = [ "uno", "dos", "tres" ];
+  }
+
+}
+
+#Incluimos el siguiente código en un template, por ejemplo: app.component.html
+
+<ul>
+	<li *ngFor="let libro of libros">------>Vamos a iterar sobre los elementos del array Libros.
+		{{libro}}  -------------------->Mostrara una lista con los tres elementos.
+	</li>
+</ul>
+
+-------------------------------------------------------
+Otro ejemplo:
+
+#Incluimos el siguiente código en el componente, por ejemplo: app.component.ts
+
+export class AppComponent {
+  
+  libros:Array<Object>;
+  
+  constructor() {
+	this.libros = [ 
+		{ id:'1', titulo:'Mi libro número uno',  autor:'El uno' },
+		{ id:'2', titulo:'Mi libro número dos',  autor:'El dos' },
+		{ id:'3', titulo:'Mi libro número tres', autor:'El tres' },
+	];
+  }
+
+}
+
+#Incluimos el siguiente código en un template, por ejemplo: app.component.html
+
+<ul>
+	<li *ngFor="let libro of libros">------>Vamos a iterar sobre los elementos del array Libros.
+		{{libro.titulo}}  ----------------->Mostrara una lista con los tres elementos, imprime el título
+	</li>
+</ul>
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+5. Desplegar información en listas
++Utilizar operadores adicionales en ngFor
+--------------------------------------------------
+
+<ul>
+	<li *ngFor="let libro of libros; index as indice">------>La variable index está proporcionada por ngFor
+		({{indice}}) {{libro.titulo}}  ------------------->Ahora puedo utilizar la variable indice, que comienza en cero.
+	</li>
+</ul>
+
+--- Otro ejemplo: -------------------------------------
+
+<ul>
+	<li *ngFor="let libro of libros; index as indice">------>La variable index es un elemento que se encuentra en ngFor
+		({{indice}}) {{libro.titulo}}  --------------------->Ahora puedo utilizar la variable indice, que comienza en cero.
+		<span *ngIf="indice == 5">Destacado</span>---------->Seleccionar el 5
+	</li>
+</ul>
+
+--- Otro ejemplo: -------------------------------------
+
+<ul>
+	<li *ngFor="let libro of libros; index as indice; first as esPrimero ; last as esUltimo">
+						------>La variable first es un elemento que se encuentra en ngFor
+					   	------>La variable last es un elemento que se encuentra en ngFor
+		({{indice}}) {{libro.titulo}}
+		<span *ngIf="esPrimero">Destacado</span>------------>first es un booleano, evaluamos su valor
+		<span *ngIf="esUltimo"> Destacado</span>------------>last es un booleano, evaluamos su valor
+	</li>
+</ul>
+
+--- Otro ejemplo: -------------------------------------
+
+<ul>
+	<li *ngFor="let libro of libros; odd as esPar; even as esImpar ">
+						------>La variable odd  es un elemento que se encuentra en ngFor
+						------>La variable even es un elemento que se encuentra en ngFor
+		({{indice}}) {{libro.titulo}} 
+		<span *ngIf="esPar"> ( es par ) </span>-------------->esPar es un booleano, evaluamos su valor
+		<span *ngIf="esImpar"> (es impar) </span>------------>esImpar es un booleano, evaluamos su valor
+	</li>
+</ul>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+5. Desplegar información en listas
++Incluir eventos y enlaces en una lista ngFor
+--------------------------------------------------
+
+<ul>
+	<li *ngFor="let libro of libros ">
+		<a href="https://google.com">{{libro.titulo}}</a>---------------------->genera listado de enlaces iguales
+		<a href="https://google.com/#g={{libro.autor}}">{{libro.titulo}}</a>--->genera listado de enlaces para buscar el autor
+	</li>
+</ul>
+
+--- Otro ejemplo: -------------------------------------
+
+<ul>
+	<li *ngFor="let libro of libros ">
+		<a (click)="mostrarAutor(libro)">{{libro.titulo}}</a>------------->genera listado de enlaces iguales
+	</li>
+</ul>
+
+#Incluimos el siguiente código en el componente, por ejemplo: app.component.ts
+
+export class AppComponent {
+
+	construtor() { }
+	
+	mostrarAutor(libro_) {
+		alert(`${libro_.titulo} fue escrito por ${libro_.autor}`);
+	}
+	
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+6. Navegación con router de Angular
++Fundamentos del enrutado en Angular
+--------------------------------------------------
+
+
 
 
 
