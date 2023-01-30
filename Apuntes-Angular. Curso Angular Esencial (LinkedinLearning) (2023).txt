@@ -398,11 +398,261 @@ export class AppComponent {
 Así que añadimos en el HTML la etiqueta:
 <app-aleatorio></app-aleatorio>
 
-
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 Métodos, propiedades y plantillas
 
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Hola Mundo!!!';
+  color:String = 'red';
+}
+
+#1º Para utilizar la variable en la plantilla './app.component.html'
+utilizamos la sintaxis, de doble llaves: {{title}}
+
+#2º Utilizando la directiva: ngStyle
+<h1 [ngStyle]="{'background':'color'}"> ------> Utilizamos la directiva [ngStyle]
+	{{title}}							------> para inyectar el valor de la variable: 'color'
+</h1>									------> se transforma en: style='background:red'
+
+#3º Incluimos métodos en la clase:
+
+export class AppComponent {
+  title = 'Hola Mundo!!!';
+  color:String = 'red';
+  
+  generarRandom():String {
+	return Math.floor(Math.random()*255).toString(16); ---> devuelve número hexadecimal
+  }
+  colorHex():String {
+	return "#"+this.generarRandom()+this.generarRandom()+this.generarRandom();
+  }
+}
+
+Y ahora modificamos el template para utilizar estos datos
+<h1 [ngStyle]="{'background':colorHex()}">  ------> Utilizamos la directiva [ngStyle]
+	{{title}}								------> para inyectar el valor para el estilo que calcula el método
+</h1>										------> se transforma en: style='background: rgb(206,41,97);"
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Anidar componentes
++ Creamos un componente colores que anidaremos en el componente principal
+$ ng generate component colores
+
+#Y en la plantilla del componente incial: app.component.html, tendremos algo similar a:
+<h1>{{ title }}</h1>
+<app-colores></app-colores>
+
++También crearemos un componente saludo:
+$ ng generate componet saludo
+que anidaremos dentro del componente colores anterior:
+
+#Así tendremos en la plantilla algo similar a:
+<h1 [ngStyle]="{'background':'colorHex()'}">
+	colores aleatorios
+	<app-saludo></app-saludo>
+</h1>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Enviar datos a un componente con @Input
+
++Vamos a aprender a comunicar los componentes entre sí
+En la sección anterior creamos dos componentes:
+colores ------> componente principal
+y saludos ----> componente secundario y anidado
+y que de momento ambos componenteses están completamente encapsulados
+y trabajan de manera individual
+
++Vamos a hacer que del componente principal podamos enviar información
+ al componente anidado:
+
++#1º Cambiamos en el componente principal: colores.component.ts
+
+export class ColoresComponent {
+  colorLocal:String;
+  
+  generarRandom():String {
+	return Math.floor(Math.random()*255).toString(16); ---> devuelve número hexadecimal
+  }
+  colorHex():String {
+	this.colorLocal = "#"+this.generarRandom()+this.generarRandom()+this.generarRandom();
+	return this.colorLocal;
+  }
+}
+
++#Y ahora cambiaríamos la sintasis en la definición de la plantilla: colores.component.html
+De momento empezamos con un ejemplo de cambio estático para verlo funcionar:
+
+<h1 [ngStyle]="{'background':'colorHex()'}">
+	<app-saludo [colorNombre]="'XXX'"></app-saludo> --->Inyectamos la propiedad y el valor en el componente
+</h1>
+
++#Y ahora hay que modificar el componente secundario y anidado: saludo.component.ts
++#Añadir el módulo: Input al import
+
+import { Component, OnInit, Input } from '@angular/core';
+
+export class SaludoComponent implements OnInit {
+
+	// Definimos la propiedad que estamos recibiendo con la siguientes sintaxis:
+	@Input() colorNombre:String;
+
++#Y ahora lo desplegamos en la plantilla como si fuese una variable local
+en saludo.component.html y escribimos:
+<p>Color del componente pade {{colorNombre}}</p>
+
++#Ahora para que funcione como habíamos pensado, cambiamos de nuevo
+el código de la plantilla del componente padre para que le pase al componente hijo información:
+
+<h1 [ngStyle]="{'background':'colorHex()'}">
+	<app-saludo [colorNombre]="colorLocal"></app-saludo> --->Inyectamos la propiedad y el valor en el componente
+</h1>
+
+Y ahora en la salida en pantalla tenemos algo parecido a:
+
+app works! ---> del componente padre
+#e6fa5 -------> colores recuperados en el componente padre
+				y pasados para que se pinten en el componente hijo
+#fed37
 ... ... ...
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+4. Directivas de uso común
++Desplegar u ocultar secciones con la directiva ngIf
+----------------------------------------------------
+
+#Ejemplo1 en el app.component.html:
+
+<div id="contenedor">
+	<div *ngIf="valor1">
+		texto a mostrar si valor1 es true, por defecto será null.
+	</div>
+</div>
+
+<button (click)="valor1=true">Texto 1</button>--->Añadimos un listener al botón
+											  --->para que inyecte el valor true en la variable valor1
+
+<p>Valor1: {{valor1}}</p>---> Con esta línea nos permite ver que valor tiene valor1.
+
+#Ejemplo2 en el app.component.html:
+
+<div id="contenedor">
+	<div *ngIf="valor2">
+		texto a mostrar si valor2 es true, por defecto será null.
+	</div>
+</div>
+
+<button (click)="valor2=!valor2">Texto 2</button>--->Añadimos un listener al botón
+												 --->para que inyecte el valor contrario de valor2en la variable valor2
+
+<p>Valor2: {{valor2}}</p>---> Con esta línea nos permite ver que valor tiene valor2.
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+4. Directivas de uso común
++Directiva ngIf con el operador ELSE
+------------------------------------
+
+Nota: Cuando estamos trabajando con una directiva dentro de Angular
+el alcance que va a tener esta directiva va a ser dentro de la etiqueta en la que se encuentra.
+
+#Ejemplo3 en el app.component.html:
+
+<div id="contenedor">
+	<div *ngIf="valor3 ; else otroTexto">
+		texto a mostrar si valor3 es true, por defecto será null.
+		en caso de que no sea true se mostrará el contenido de la variable otroTexto.
+		Definimos con <ng-template #otroTexto> la plantilla de texto que deberá ser mostrada.
+	</div>
+</div>
+<ng-template #otroTexto>
+	Otro texto, que se mostrará si valor3 no es true.
+</ng-template>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+4. Directivas de uso común
++Ocultar elementos del DOM con ngContainer
+------------------------------------------
+
+#Habíamos dicho que la directiva ngIf debe ir siempre contenida en una etiqueta.
+Y la añadimos a la etiqueta div. Esto es: <div *ngIf="valor3 ; else otroTexto">
+El problema es que a veces al evaluar la condición se genera un div vacío
+que realemente no debería afectar a nada pero el problema surge cuando hay hojas de estilo
+a las que si que afecta un div div { ... } y obtenemos un efecto indeseado.
+
+Para solventar este problema, Angular nos provee de una etiqueta especial:
+<ng-container *ngIf="valor3 ; else otroTexto">
+	texto a mostrar si valor3 es true
+</ng-container>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+4. Directivas de uso común
++Mostrar opciones múltiples con ngSwitch y ngModel
+--------------------------------------------------
+
+Incluimos el siguiente código en un template, por ejemplo: app.component.html
+<h1>Organizador de tareas</h1>
+<div [ngSwitch]="diasSemana">--------------------------->directiva: ngSwitch y le asignamos la expresión a evaluar
+	<p class="item" *ngSwitchCase="'lunes'">Hoy es lunes</p>
+	<p class="item" *ngSwitchCase="'martes'">Hoy es martes</p>
+	<p class="item" *ngSwitchCase="'miércoles'">Hoy es miércoles</p>
+	<p class="item" *ngSwitchCase="'jueves'">Hoy es jueves</p>
+	<p class="item" *ngSwitchCase="'viernes'">Hoy es viernes</p>
+	<p *ngSwitchCase="13">------ 13 -------</p>
+	<p *ngSwitchDefault>Elija un día de la semana</p>
+</div>
+<input type="text" [(ngModel)]="diasSemana"/>----------->directiva: ngModel, aplicado a un input 
+											 ---------->conexión en tiempo real de lo que escriba el usuario en el input text
+											 ---------->con el valor que corresponda en el ngSwitch diasSemana
+											 
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+4. Directivas de uso común
++Controlar estilos con ngStyle y ngClass
+--------------------------------------------------
+
+Incluimos el siguiente código en un template, por ejemplo: app.component.html
+<h1>Estilos</h1>
+Ejemplo, color fijo:
+<div class="cuadrado" [ngStyle]="{'background':'yellow'}"></div> --->Inyecta directamente estilos en un elemento de HTML
+Otro Ejemplo, si la variable color tiene valor se le asigna el valor asignado y sino se le aplica el color 'blue':
+<div class="cuadrado" [ngStyle]="{'background':color ? color : 'blue'}"></div> --->Inyecta directamente estilos en un elemento de HTML
+
+<button (click)="color='red'">Rojo</button>
+<button (click)="color='green'">Verde</button>
+
+-------------------------------------------------------------------
+
+Vamos a ver la directiva: ngClass, que en lugar en inyectar estilos como ngStyle, inyecta una clase
+
+<button (click)="color='green'" [ngClass]="color">Verde</button>------>Inyecta una clase: class="red" o class="verde" al botón																			
+																------>dependiendo del valor de la variable color
+
+-------------------------------------------------------------------
+Otro ejemplo:
+
+
+<button (click)="color='red'" [ngClass]="{'activo':color=='red'}">Rojo</button>
+																------>Asignará al botón la clase definida en un css 'activo'
+																------>si se cumple la condición color=='red'
+<button (click)="color='green'" [ngClass]="color">Verde</button>
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+5. Desplegar información en listas
++Desplegar listas con ngFor
+--------------------------------------------------
+
 
 
 
