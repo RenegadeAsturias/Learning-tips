@@ -789,6 +789,186 @@ export class AppComponent {
 +Fundamentos del enrutado en Angular
 --------------------------------------------------
 
+En la creación del proyecto: ng new navegacion-basica
+?Would you like to add Angular routing? (y/N)
+
+También le creamos un nuevo componente al proyecto:
+$ ng generate component segundo-componente
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-segundo-componente',
+  templateUrl: './segundo-componente.component.html',
+  styleUrls: ['./segundo-componente.component.css']
+})
+export class SegundoComponenteComponent {
+
+}
+
+-----------------------------------------------------------------
+Con la opción del Routing:
+
++Nos crea el archivo más importante para gestionar las rutas
+
+src > app > app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+-----------------------------------------------------------------
+
+#1º Añadimos el array routes, las rutas que necesitamos
+
+import { SegundoComponenteComponent } from './segundo-componente/segundo-componente.component';
+
+const routes: Routes = [
+	{ path:'segundo', component:SegundoComponenteComponent }, 
+	----> Cada ruta será un Objeto, con parámetros:
+	----> path: es la ruta, en este caso 'segundo' es un componente creado (ng generate component segundo-componente)
+	----> component: es la clase del componente 'segundo' es SegundoComponenteComponent
+];
+
+-----------------------------------------------------------------
+
+#2º Nos aseguramos que en nuestra aplicación en
+
+src > app > app.component.html 
+
+tenemos un nodo o una etiqueta llamada: 
+<router-outlet></router-outlet>
+
+Aquí es donde se va a mostrar el contenido de nuestra aplicación
+todo lo que está alrededor de:
+<router-outlet></router-outlet>
+va a mantenerse estático.
+
+Pero dentro de esta etiqueta va a mostrarse el componente que hemos definido
+en esta sección:
+const routes: Routes = [
+	{ path:'segundo', component:SegundoComponenteComponent }, 
+];
+
+Dentro de la sección 
+<router-outlet></router-outlet>
+va a mostrarse el contenido del componente SegundoComponenteComponent
+
+Ejemplo:
+<h1>Mi aplicación Navegación Básica</h1>
+
+<router-outlet></router-outlet>
+
+-----------------------------------------------------------------
+
+#3º Desplegamos con:
+$ ng serve -o 
+
+http://localhost:4200
+Y por defecto se muestra en la pantalla
+
+Mi aplicación Navegación Básica
+
+Para que se muestre en la etiqueta
+<router-outlet></router-outlet>
+el contenido de la plantilla del componete segundo
+tendremos que escribir en al url de la pantalla:
+
+http://localhost:4200/segundo
+Y ahora se muestra:
+
+Mi aplicación Navegación Básica
+segundo-componente works!
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+6. Navegación con router de Angular
++Integrar múltiples componentes con enrutado
+--------------------------------------------------
+
+En esta lección vamos a aprender
+cómo integrar una aplicación Angular 
+para que pueda utilizar diferentes componentes a través de enrutado.
+
+
+#1º Confirmar que : app.module.ts tiene: 
+
+import { AppRoutingModule } from './app-routing.module';
+
+Y que tengamos también en los imports: AppRoutingModule
+
+@NgModule ({
+	declarations: [...],
+	imports: [
+		...
+		AppRoutingModule,
+		...
+
+#2º Tenemos el fichero:
+
+src > app > app-routing.module.ts
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+#3º Añadirmos las rutas al array routes
+
+const routes: Routes = [
+	{ path:'lista-libros', component:ListaDeLibrosComponent }, 
+	{ path:'acerca-de', component:AcercaDeComponent }, 
+];
+
+
+#4º Comprobamos que tenemos en el fichero:
+
+src > app > app.component.html 
+
+tenemos un nodo o una etiqueta llamada: 
+<router-outlet></router-outlet>
+
+Y si no la tenemos la añadimos.
+
+#5º En la página añado también un componente alrededor del enrutado:
+
+<app-encabezado></app-encabezado>
+<router-outlet></router-outlet>
+
+Esto significa que en nuestra aplicación habrá un encabezado que va a estar
+permanentemente visible sin importar la ruta
+<app-encabezado></app-encabezado>
+
+Pero después de él vamos a tener un contenido que va a estar variando
+dependiendo de la ruta que nosotros hemos definido en: app-routing.module.ts
+
+#6 Se mostrará una cabecera fija
+y el contenido inferior irá cambiando navegando manualmente
+introduciendo en la url del navegador las urls definidas en el routing
+
+http://localhost:4200/lista-libros --> Mostrará un listado de libros
+http://localhost:4200/acerca-de -----> Mostrará un texto describiendo la sección acerca de...
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+6. Navegación con router de Angular
++Desplegar rutas por defecto
+--------------------------------------------------
+
+
 
 
 
