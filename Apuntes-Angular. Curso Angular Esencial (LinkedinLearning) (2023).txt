@@ -968,9 +968,67 @@ http://localhost:4200/acerca-de -----> Mostrará un texto describiendo la secci�
 +Desplegar rutas por defecto
 --------------------------------------------------
 
+Aprenderemos a instalar y configurar las rutas por defecto.
+
+Teníamos definidas dos rutas:
+http://localhost:4200/lista-libros --> Mostrará un listado de libros
+http://localhost:4200/acerca-de -----> Mostrará un texto describiendo la sección acerca de...
+
+Pero cuando el usuario entre en la ruta por defecto no ve ningún contenido:
+http://localhost:4200
+
+#Añadirmos las rutas al array routes
+
+const routes: Routes = [
+	{ path:'lista-libros', component:ListaDeLibrosComponent }, 
+	{ path:'acerca-de', component:AcercaDeComponent },
+
+	#1º Ruta por defecto, para cuando entre en la aplicación y le redirige a 'lista-libros'
+	{ path:'', pathMatch:'full', redirectTo:'lista-libros' }
+
+	#2º Ruta por defecto para cuando el usuario solicite una ruta no definida en la aplicación y le redirige a 'lista-libros'
+	{ path:'**', redirectTo:'acerca-de' } --> Ejemplo: Le redirigimos a la página Acerca de...
+	
+	#3º Ruta por defecto para cuando el usuario solicite una ruta no definida en la aplicación y le redirige a '404'
+	{ path:'404, redirectTo:'Error404Component' } --> Definimos la ruta 404 y mostramos el Componente 404
+	{ path:'**', redirectTo:'404' } ----------------> Ejemplo: Le redirigimos a la ruta previamente definida 404
+];
 
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+6. Navegación con router de Angular
++Navegación interna en una aplicación
+--------------------------------------------------
 
+Tenemos en el ejemplo que se describe una cabecera con unos enlaces definidos
+
+<a href="/">Inicio</a>
+<a href="/lista-libros">Lista de libros</a>
+<a href="/acerca-de">Acerca de</a>
+
+Cuando hacemos clic sobre los enlaces
+vemos en el navegador, en la pestaña Network
+que cada vez que navegamos a una opción nos estamos bajando
+todos los componentes de la aplicación.
+
+Lo ideal para evitar esto es que nosotros pudiésemos hacer algún tipo
+de carga asíncrona y justamente eso lo podemos hacer con Angular.
+
+
+Va a hacer una carga mucho más eficiente y completamente asíncrona
+
+<a [routerLink]="['/lista-libros']">Lista de libros</a>
+<a [routerLink]="['/acerca-de']">Acerca de</a>
+
+Ahora sólo se carga el componente dinámico que se está enrutando.
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+6. Navegación con router de Angular
++Activar rutas dinámicas
+--------------------------------------------------
+
+Vamos a aprender como crear rutas dinámicas
 
 
 
