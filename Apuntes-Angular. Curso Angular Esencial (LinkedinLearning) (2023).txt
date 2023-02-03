@@ -1030,5 +1030,30 @@ Ahora sólo se carga el componente dinámico que se está enrutando.
 
 Vamos a aprender como crear rutas dinámicas
 
+#1. Creamos una ruta dinámica de ejemplo:
+
+const routes: Routes = [
+	{ path:'lista-libros', component:ListaDeLibrosComponent }, 
+	{ path:'acerca-de', component:AcercaDeComponent },
+	{ path:'detalles/:libroId', component:DetallesComponent },
+
+#2. En la plantilla de un elemento que muestra un listado de libros tenemos:
+
+<div class="container">
+	<ul>
+		<li *ngFor="let libro of libros">
+			<a [routerLink]="['/detalles']"> {{libro.titulo}} </a>
+			------------> Esto lleva a: http//localhost:4200/detalles
+			
+			<a [routerLink]="['/detalles','misDatos']"> {{libro.titulo}} </a> 
+			------------> Esto lleva a: http//localhost:4200/detalles/misDatos
+			
+			<a [routerLink]="['/detalles', libro.id]"> {{libro.titulo}} </a> 
+			------------> Esto lleva a: http//localhost:4200/detalles/5 
+			------------> siendo 5 el id de un libro seleccionado de la lista
+			
+		</li>
+	</ul>
+</div>
 
 
