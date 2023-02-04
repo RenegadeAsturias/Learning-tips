@@ -1056,4 +1056,145 @@ const routes: Routes = [
 	</ul>
 </div>
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+6. Navegación con router de Angular
++Leer información de rutas dinámicas
+--------------------------------------------------
 
+Queremos leer los valores dinámicos que viajan en la url
+para el ejemplo anterior, donde habíamos definido la url como:
+
+const routes: Routes = [
+	{ path:'detalles/:libroId', component:DetallesComponent },
+
+Editamos el fichero del componente: detalles\detalles.component.ts
+Y añadimos el siguiente código en el constructor que estaba vacío:
+
+#En nuestra clase, ya tenemos definido un array con objetos libro cargados:
+this.libros = {
+	{id:1, titulo: 'Uno Título', 	autor: 'Uno Autor', 	descripcion: 'Uno Descripción' },
+	{id:1, titulo: 'Dos Título', 	autor: 'Dos Autor', 	descripcion: 'Dos Descripción' },
+	{id:1, titulo: 'Tres Título', 	autor: 'Tres Autor', 	descripcion: 'Tres Descripción' },
+	{id:1, titulo: 'Cuatro Título', autor: 'Cuatro Autor', 	descripcion: 'Cuatro Descripción' },
+	.........................................................
+}
+
+El módulo ActivateRoute nos va a permitir acceder a la información que está en la url.
+
+#Nos aseguramos que está correctamente importado
+import { ActivateRoute } from '@angular/router';
+
+#Buscamos el constructor en la clase del componente y añadimos:
+constructor( private ruta:ActivateRoute) { 
+
+#Buscamos en la clase, el evento: ngOnInit()
+este evento se va a ejecutar en el momento en el que se inicialice el componente:
+
+#Declaramos una variable con el mismo nombre que el que establecimos en la definición de la ruta dinámica:
+# { path:'detalles/:libroId', component:DetallesComponent },
+
+libroId:any; -- Es de tipo any para no complicar el ejemplo.
+libroSeleccionado:any;
+
+ngOnInit() {
+
+	this.libroId = this.ruta.snapshot.paramMap.get('libroId');
+	this.libroSeleccionado = this.encontrarLibro();
+	
+}
+
+encontrarLibro() {
+	return this.libros.filter((libro)=>libro.id==this.libroId)[0];
+}
+
+#Y ahora falta desplegar los detalles en la plantilla
+Editamos el fichero de la plantilla del componente que estamos utilizando:
+detalles\detalles.component.html
+donde de momento estamos escribiendo texto estático y escribimos:
+
+<div class="container">
+	<h1>{{libroSeleccionado.titulo}}</h1>
+	<h2>por: {{libroSeleccionado.autor}}</h2>
+	<p>{{libroSeleccionado.descripcion}}</p>
+</div>
+
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+7. Compartir datos con los servicios de Angular
++Crear un servicio de Angular
+--------------------------------------------------
+
+#Los servicios nos va a servir para comunicar información entre componentes.
+Vamos a ver cómo crear e implementar un servicio utilizando la línea de comandos.
+
+#En el componente principal tenemos
+
+src > app > app.component.html 
+<app-encabezado></app-encabezado>
+<router-outlet></router-outlet>
+
+#cada una de las dos etiquetas está desplegando diferentes componentes
+#el servicio nos va a permitir conectar ambos elementos
+
+#Creamos el servicio ejecutando en la línea de comandos
+$ ng generate service librosSeleccionados
+
+#Se han creado dos nuevos ficheros en nuestro proyecto
+scr > app > librosseleccionados.service.spec.ts
+scr > app > librosseleccionados.service.ts
+
+#Una vez generado el servicio en la consola se lee:
+WARNING Service is generarted but not provided, it must be provided to be used
+
+Eso significa que aún no se encuentra habilitado dentro de la apliación
+vamos a habilitarlo:
+
+#Para ello vamos a: app.module.ts
+y añadimos la siguiente línea:
+
+import { LibrosseleccionadosService } from './librosseleccionados.service'; --> Ojo! sin extensión
+
+#y añadimos el servicio también en la sección: providers
+
+providers: [
+	LibrosseleccionadosService
+],
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+7. Compartir datos con los servicios de Angular
++Preparación para usar serivicios en Angular
+--------------------------------------------------
+
+#Retomamos el ejemplo anterior, con la página que mostraba el listado de libros
+http://localhost:4200/lista-libros
+
+#Queremos que cuando se haga clic sobre el enlace de algún libro
+se agregue el libro a una lista desplegable
+
+#Editamos la plantilla del componente encabezado, es encabezado.component.html
+Y añadimos un botón y un listenera para el evento click.
+Cuando hagamos clic haremos que la variable: mostrarLista funcione como un switch.
+
+<button class="... mostrar-libros" (click)="mostrarLista=!mostrarLista"> </button>
+
+#Y debajo tenemos de momento una lista dinámica
+que se mostrará en función del valor de la variable mostrarLista
+El valor por defecto de mostrarLista es false
+y por tanto inicialmente no se mostrará la lista:
+
+<div class"misLibros" *ngIf="mostrarLista">
+	<h2>Mis Libros</h2>
+	<ul>
+		<li>Libro Uno</li>
+		<li>Libro Dos</li>
+	</ul>
+</div>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+7. Compartir datos con los servicios de Angular
++Conectar un servicio con múltiples componentes
+--------------------------------------------------
+
+............................
