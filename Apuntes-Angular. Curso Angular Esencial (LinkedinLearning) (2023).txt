@@ -1197,4 +1197,321 @@ y por tanto inicialmente no se mostrará la lista:
 +Conectar un servicio con múltiples componentes
 --------------------------------------------------
 
-............................
+#En esta lección vamos a conectar dos componentes con un servicio.
+
+#Por un lado tenemos un componente que nos muestra un listado de libros.
+#Y otro componente con un encabezado
+que nos debería de mostrar una lista con los libros seleccionados en la lista.
+
+#La idea es que el servicio recopile la información con los libros seleccionados
+y la almacene para que pueda ser mostrada en el listado de libros de la cabecera.
+
+#1º Nos vamos al fichero del servicio creado anteriormente
+scr > app > librosseleccionados.service.ts
+
+@Injectable()
+export class LibrosseleccionadosService {
+
+#Definimos un array de libros para guardar los libros seleccionados
+libros:Array<Object>;
+
+constructor() { }
+	#Inicializamos el array libros vacío
+	this.libros = []; 
+}
+
+#Se utilizará desde el componente con el listado de libros
+#para añadir los libros seleccionados
+agregarLibros(_nuevoLibro) { 
+	this.libros.push(_nuevoLibro);
+}
+
+#Se llamará desde el componente cabecera para mostrar
+#el listado de libros seleccionados
+mostrarLibros() {
+	if(this.libros.length>0) {
+		return this.libros;
+	} else {
+		return false; -- Para ocultar el listado si no hay libros seleccionados
+	}
+}
+
+#2º Nos vamos a la clase del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.ts
+
+#Copiamos el import del servicio y lo aplicamos al componente y cambiamos la ruta con '..'
+import { LibrosseleccionadosService } from '../librosseleccionados.service'; --> Ojo! sin extensión
+
+#Ahora el componente puede inyectar información en mi servicio
+#actualmente el constructor de mi componente tenemos
+#constructor(private http:Http) {}
+#Añadimos:librosseleccionados
+
+constructor(private http:Http, public librosseleccionados:LibrosseleccionadosService) {}
+
+#Implementamos un método:
+agregarLibro(_libro) {
+	
+}
+
+#3º Nos vamos a la plantilla del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.html
+
+#Y agregamos un evento clic, donde se llamará la función implementada
+#en la clase y le pasará como parámetro el libro seleccionado.
+#(click)="agregarLibro(libro)"
+
+<div class="container">
+	<ul>
+		<li *ngFor="let libro of libros">
+			<a	(click)="agregarLibro(libro)"
+				[routerLink]="['/detalles', libro.id]"> {{libro.titulo}} </a> 
+		</li>
+	</ul>
+</div>
+
+
+#4º Nos vamos a la clase del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.ts
+
+Y continuamos con la implementación del método: agregrarLibro(_libro)
+
+constructor(private http:Http, public librosseleccionados:LibrosseleccionadosService) {}
+
+#Implementamos un método, que llama al método del servicio pasándole como parámetro
+#el libro que recibió como parámetro al hacer clic en un libro en la lista de libros
+#lista-de-libros.component.html > (click)="agregarLibro(libro)"
+
+agregarLibro(_libro) {
+	this.librosseleccionados.agregarLibros(_libro);
+}
+
+#5º Nos vamos a la clase del componente encabezado que muestra la lista de libros seleccionados
+#y utilizará la información que hemos ido guardando en el servicio.
+scr > app > encabezado > encabezado.component.ts
+
+#Copiamos el import del servicio y lo aplicamos al componente y cambiamos la ruta con '..'
+import { LibrosseleccionadosService } from '../librosseleccionados.service'; --> Ojo! sin extensión
+
+#Ahora el encabezado también tiene acceso al código y la información de nuestro servicio.
+#Añadimos:librosseleccionados al constructor
+
+constructor(public librosseleccionados:LibrosseleccionadosService) {}
+
+#Y ahora la variable: librosseleccionados, se encuentra disponible dentro del componete
+
+#6º Nos vamos a la plantilla del componente encabezado
+scr > app > encabezado > encabezado.component.html
+
+<div clas="misLibros" *ngIf="mostrarLista">
+	<h2>Mis Libros</h2>
+	<ul *ngIf="librosseleccionados.mostrarLibros()">
+		<li *ngFor="let libro of librosseleccionados.mostrarLibros()">{{libro.titulo}}</li>
+	</ul>
+</div>
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+8. Conectar aplicaciones a datos externos
++Cargar archivos externos en Angular
+--------------------------------------------------
+
+#Veremos cómo Angular interaciona con archivos que se encuentran fuera de la aplicación.
+#Hasta ahora hemos trabajado con información guardada dentro de nuestra aplicación
+#en la clase del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.ts
+
+constructor() {
+	this.libros = [
+		{id:1, titulo:"Libro uno"...
+	]
+}
+
+#1º Nos vamos al fichero y añadimos dos librerías:
+src > app > app.module.ts
+
+#Esta librería nos permitirá trabajar con toda la configuración http
+#y con archivos externos a través del protocolo http
+import { HttpClientModule } from '@angular/common/http';
+
+#También tenemos eque imporatar esta librería dentro de la aplicación
+@NgModule{(
+	... ... ... ...
+	imports: [
+		HttpClientModule
+	]
+})
+
+#2º Nuestra intención es eliminar la información local con el listado de libros
+#Cuando se crea la aplicación con el Angular CLI $ ng new app
+#se crea por defecto una carpeta dentro de nuestro proyecto
+#src > app > assets 
+#aquí es donde nosotros podemos poner los archivos externos a nuestra apliación
+#Para el ejemplo, creamos una carpeta: json y añadimos un fichero: lista-de-libros.json
+#src > app > assets > json > lista-de-libros.json
+[{
+	"id":1,
+	"titulo":"Libro uno",
+	"autor":"Autor uno",
+	"descripcion":"Descripción uno"
+},...
+
+#4º Nos vamos a la clase del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.ts
+
+#Y borramos la información estática que habíamos utilizado previamente
+constructor() {
+	this.libros = [
+		{id:1, titulo:"Libro uno"...
+	]
+}
+
+#Tenemos de nuevo
+constructor() { }
+
+#Vamos a necesitar acceder al fichero así que necesitamos importar 
+import { HttpClientModule } from '@angular/common/http';
+
+#Añadimos en el constructor una variable de ese tipo HttpClient
+#ESTO CREA UNA INYECCIÓN DE DEPENDENCIAS 
+#y nos va a permitir que tengamos acceso dentro del componente local
+#a todos lo métodos que se encuentran contenidos dentro del HttpClient de Angular 
+constructor(private http:HttpClient) {
+}
+
+#Implementamos un método que va cargar nuestra lista de libros
+#Y también vamos a definir la ruta donde se encuentra el archivo con la información
+#esto puede ser también la ruta a una API o cualquier información externa.
+#Añadiremos una subscripción, porque lo que nos va a devolver la llamada es un Observable
+cargarLista(){
+	this.http.get('assets/json/lista.json').subscribe(
+		(respuesta)=> { this.libros = respuesta; }
+	)
+}
+
+#Nos da un pequeño error con el casteo del tipado de la resupesta que teníamos declarada en le array
+#como: libros:Libro[];
+#porque nosotros no podemos saber el tipo de objeto que vamos a recibir de nuestro archivo Json
+#así que no lo podemos tipar aún.
+#Simplemente para resolver el error de una forma rápida, lo cambiamos por:
+#libros:any;
+
+#Y ahora nos falta llamar al método para que se cargue la lista:
+ngOnInit() {
+	this.cargarLista();
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+8. Conectar aplicaciones a datos externos
++Manejo de errores de conexión HTTP
+--------------------------------------------------
+
+#En el caso de que tratando de obtener la información externa algo sale mal
+#Simulamos un error, modificando la ruta del documento externo
+
+this.http.get('assets/json/lista.json00000000000').subscribe(
+
+#En la aplicación ya no mostramos ninguna lista de libros recuperada
+#Y en la pestaña network del navegador encontramos un error en la llamada
+#lista.json00000000000 un Status 404
+
+#Nota: ejecutando este código, en caso de error en la primera llamada
+#repetiríamos la llamada de nuevo, obteniendo obviamente el mismo error:
+cargarLista(){
+	this.http.get('assets/json/lista.json').subscribe(
+		(respuesta)=> { this.libros = respuesta; },
+		(respuesta)=> { this.libros = respuesta; }
+	)
+}
+
+#Ahora vamos a cambiar la segunda llamada para que tome acción en caso de error
+#Creamos una variable:
+errorHttp:boolean = false;
+
+cargarLista(){
+	this.http.get('assets/json/lista.json').subscribe(
+		(respuesta)=> { this.libros = respuesta; },
+		(respuesta)=> { this.errorHttp = true; }
+	)
+}
+
+#Y ahora nos vamos a la plantilla del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.html
+
+#Y incluimos el siguiente código
+
+<div class="container">
+	<ul>
+		<li *ngFor="let libro of libros">
+			<a	(click)="agregarLibro(libro)"
+				[routerLink]="['/detalles', libro.id]"> {{libro.titulo}} </a> 
+		</li>
+	</ul>
+	
+	#Incluimos el siguiente código para que se muestre un mensaje de error
+	#si falló la carga de nuestro Array en la conexión con el fichero externo
+	<div class="alert alert-warning" *ngIf="errorHttp">
+		No se puede mostrar la lista.
+	</div>
+	
+</div>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+8. Conectar aplicaciones a datos externos
++Desplegar diálogos de precarga
+--------------------------------------------------
+
+#Cuando trabajamos con ficheros externos no solo tenemos que lidiar con el problema 
+#de errores potenciales dentro de la carga de datos
+#también tenemos que lidiar con el tiempo que tarda en descargase los datos
+#para ser mostrados al usuario
+
+#Así que vamos a ver como utilizar diálogos de precarga
+#Como truco para simular una descarga lenta vamos a las herramientas de desarrollo del Navegador
+#Pestaña Network -> Opción: No throttling (Sin estrangulamiento)
+#Y modificamos su valor seleccionando: Slow 3G
+#Así que simulará la carga con una conexión más lenta
+#Como desplegar información para orientar al usuario de que se está realizando un carga en nuestra aplicación
+
+#En la clase del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.ts
+#Creamos una variable:
+cargando:boolean = false;
+
+#Y además incluimos el siguiente código
+#Con: this.cargando = true;
+#Cambiamos de valor la variable para que se muestre el mensaje.
+ngOnInit(){
+	this.cargando = true; --Cambiamos de valor la variable!
+	this.cargarLista();
+}
+
+#Y además incluimos el siguiente código
+#Con: this.cargando = false;
+#Cambiamos de valor la variable para que ya no se muestre el mensaje.
+cargarLista(){
+	this.http.get('assets/json/lista.json').subscribe(
+		(respuesta)=> { this.libros = respuesta; this.cargando = false; },
+		(respuesta)=> { this.errorHttp = true; }
+	)
+}
+
+#Y ahora nos vamos a la plantilla del componente de listado de libros
+scr > app > lista-de-libros > lista-de-libros.component.html
+
+#Y añadimos el mensaje CARGANDO en la plantilla
+#y un condicional para que se muestre o se oculte el mensaje en función de la carga
+
+<div class="container">
+	<div *nfIf="cargando">CARGANDO...</div>
+	<ul>
+		<li *ngFor="let libro of libros">
+			<a	(click)="agregarLibro(libro)"
+				[routerLink]="['/detalles', libro.id]"> {{libro.titulo}} </a> 
+		</li>
+	</ul>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
