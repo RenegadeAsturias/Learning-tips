@@ -1512,6 +1512,208 @@ scr > app > lista-de-libros > lista-de-libros.component.html
 	</ul>
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+9. Manejo programático de CSS y DOM
++Alcance de los estilos de Angular
+--------------------------------------------------
+
+#Distintas formas de agregar estilos en la aplicación
+scr > app > app.component.ts
+
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styles:[`
+		li { background-color:red; }
+	`]
+})
+
+#O también:
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
+})
+
+#1º Ahora añadimos los css en la hoja de estilos
+scr > app > app.component.css
+
+li { background-color: blue; }
+
+#2º Seguimos el ejemplo y creamos un nuevo componente
+$ ng generate component prueba
+
+#En la plantilla del componente: scr > app > prueba > prueba.component.html
+#Añadimos una lista similar a la del componente: scr > app > app.component.html
+<ul>
+	<li>Otro item</li>
+</ul>
+
+#En la plantilla del componente: scr > app > app.component.html
+#tendremos:
+<ul>
+	<li>Otro item</li>
+</ul>
+
+**************
+
+<app-prueba></app-prueba>
+
+#3º En la salida vemos que los estilos que añadimos en el componente principal
+styleUrls: ['./app.component.css']
+li { background-color: blue; }
+
+#el estilo no aplica al nuevo componente gracias a la encapsulación de los componentes
+
+
+#4º Para escribir estilos de manera global
+#hay que hacerlo en la plantilla de la aplicación
+scr > styles.css
+li { font-size: 30px; }
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+9. Manejo programático de CSS y DOM
++Insertar y controlar Renderer 2
+--------------------------------------------------
+
+#Aprenderemos como manejar los elementos del DOM utilizando Angular
+#Para trabajar con estilos Angular no permite trabajar con el módulo Renderer
+
+#Buscamos en la aplicación el archivo del componente donde trabajaremos con Renderer
+scr > app > app.component.ts
+
+#Importamos el módulo Renderer2
+import { Component, Renderer2 } from '@angular/core';
+
+#También añadimos en el constructor
+#Y ahora ya tenemos acceso a todos los métodos de esta clase
+constructor( private renderer:Renderer2) { 
+
+#En la plantilla del componente: scr > app > app.component.html
+#tendremos:
+<ul>
+	<li *ngFor="let pais of paises" (click)=mostrarActivo()" >{{pais.nombre}}</li>
+</ul>
+
+#Para tener acceso a un elemento del DOM, tendremos que añadir: #miItem
+#Y también lo pasamos como parámetro del método
+<ul>
+	<li *ngFor="let pais of paises" (click)=mostrarActivo(miItem)" #miItem >{{pais.nombre}}</li>
+</ul>
+
+
+#En la clase del componente: scr > app > app.component.ts
+#tendremos:
+constructor( private renderer:Renderer2) { 
+}
+
+#Añadirá el class 'destacado' al elemento que se le pasó como parámetro
+mostrarActivo(elemento:HTMLElement){
+	this.renderer.addClass(elemento,'destacado');
+}
+
+#Ahora creamos un class 'destacado' en la hoja de estilos
+scr > app > app.component.css
+.destacado {
+	background-color: orange;
+}
+
+#Ahora cuando hago clic sobre cada elemento de la lista mostrada
+#al elemento li, de lista se le aplica el class destacado y cambia de color.
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+9. Manejo programático de CSS y DOM
++Controlar las propiedades gráficas con Renderer 2
+--------------------------------------------------
+
+#Vamos a explorar la interacción de los elementos del DOM
+con elementos y acciones de Angular a través del módulo Renderer 2
+
+#Cuando en la sección anterior pasábamos como parámetro el elemento del DOM
+<li *ngFor="let pais of paises" (click)=mostrarActivo(miItem)" #miItem >{{pais.nombre}}</li>
+#Y lo recibimos como parámetro
+mostrarActivo(elemento:HTMLElement){
+#Tenemos acceso Total al elemento que estamos inyectando 
+#y podemos modificar todas y cada una de las propiedades HTML del objeto
+#Cualquier operación que podamos hacer a través del DOM con javascript es posible
+#Esta forma de acceder al elemento a través del renderer
+#permite mantener el encapsulamiento de cada uno de los componentes
+
+#Un ejemplo
+#Creamos una variable, donde guardamos el elemento anterior seleccionado
+#antiguo:HTMLElement;
+
+#Y ahora, cuando llegue un elemento nuevo
+#si tenemos guardado uno anterior a ese le quitamos la clase destacado
+#de esta forma nos aseguramos que solo habrá uno como destacado
+#y al elemento nuevo seleccionado, lo marcamos como seleccionado
+#y nos lo guardamos para una próxima interacción
+mostrarActivo(elemento:HTMLElement){
+	if(this.antiguo) {
+		this.renderer.removeClass(elemento,'destacado');
+	}
+	this.renderer.addClass(elemento,'destacado');
+	this.antiguo = elemento;
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+9. Manejo programático de CSS y DOM
++Controlar el DOM con Renderer 2
+--------------------------------------------------
+
+#Vamos a aprender como manejar el DOM con el módulo Renderer 2
+
+#Ahora vamos a completar el ejemplo accediendo al DOM
+mostrarActivo(elemento:HTMLElement){
+	#Por ejemplo, añade un atributo al elemento seleccionado
+	this.renderer.setAttribute(elemento,"data-seleccionado","true");
+
+#Y ahora aplicarle un estilo
+li[data-seleccionado="true"]:not(.destacado) { background-color:gray; } 
+
+#Otro ejemplo, que añade una etiqueta span al elemento seleccionado
+let nuevoElemento = this.renderer.createElement("span");
+this.renderer.setProperty(nuevoElemento, "innerHTML", " Check!");
+this.renderer.appendChild(elemento, nuevoElemento);
+
+#Otro ejemplo, tenemos el siguiente código en nuestra plantilla
+#cuando haga clic sobre alguna de las opciones modificaremos este objeto
+<input type="button" disabled value="No puedes viajar aún"/>
+
+#Primero, le añadimos un identificador (#viajeBoton)
+<input type="button" disabled value="No puedes viajar aún" #viajeBoton/>
+
+#Y ahora lo añadimos en la llamada a nuestro método: mostrarActivo, añadiendo 'viajeBoton' a los parámetros
+<li *ngFor="let pais of paises" (click)=mostrarActivo(miItem,viajeBoton)" #miItem >{{pais.nombre}}</li>
+
+#Ahora cambiamos la firma del método de la clase del componente, para añadir el parámetro del botón
+mostrarActivo(elemento:HTMLElement, boton:HTMLElement){
+	... ... ... ...
+	this.renderer.removeAttribute(boton, "disabled");
+	this.renderer.setAttribute(boton, "value", "Ya puedes viajar");
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+9. Manejo programático de CSS y DOM
++Compilar y publicar el proyecto
+--------------------------------------------------
+
+#Ya hemos finalizado de programar nuestra aplicación
+#Por defecto, nuestro proyecto estaba optimizado para el desarrollo
+#pero para publicarlo debemos optimizar la aplicación para la web
+
+#Para optimizar la aplicación y preparla para la publicación
+#compilamos la aplicación y la optimizamos para el servidor de producción
+
+$ ng build --prod
+
+#se generará en nuestro proyecto una carpeta: dist\<nombre_proyecto>
+
+#Para distribuir la aplicación y subirla a un servidor
+
+
+
 
 
 
